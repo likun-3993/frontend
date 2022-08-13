@@ -13,7 +13,11 @@ const ValuedInput = ({
     <View>
       <TouchableOpacity onPress={onPress}>
         <View style={[styles.main, style]}>
-          <AppTextInput {...props} />
+          <AppTextInput
+            {...props}
+            placeholderTextColor="#000"
+            text={{ color: "black" }}
+          />
           <Ionicons name={name} size={30} color="black" />
         </View>
       </TouchableOpacity>

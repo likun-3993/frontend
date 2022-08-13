@@ -4,8 +4,10 @@ import Screen from "./components/Screen";
 import { NavigationContainer } from "@react-navigation/native";
 import ContextHolder from "./context/ContextHolder";
 import { LogStack } from "./components/StackList";
+import PostScreen from "./pages/Post/PostScreen";
+import PaymentScreen from "./pages/PaymentScreen";
+import { StripeProvider } from "@stripe/stripe-react-native";
 // import Welcome from "./components/Welcome";
-// import PostScreen from "./pages/Post/PostScreen";
 // import Login from "./pages/LogSign/Login";
 // import TopTab from "./components/Tabs/TopTab";
 // import PaymentSuccess from "./pages/PaymentSuccess";
@@ -25,13 +27,13 @@ import { LogStack } from "./components/StackList";
 // import SForm from "./pages/LogSign/SForm";
 export default function App() {
   return (
-    <ContextHolder>
-      <Screen>
+    <Screen>
+      <ContextHolder>
         <NavigationContainer>
           <LogStack />
         </NavigationContainer>
-      </Screen>
-    </ContextHolder>
+      </ContextHolder>
+    </Screen>
   );
 }
 

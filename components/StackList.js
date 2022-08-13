@@ -14,11 +14,28 @@ import SForm from "../pages/LogSign/SForm";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import WelcomeScreen from "../pages/WelcomeScreen";
 import CustomeDrawer from "./Tabs/CustomeDrawer";
+import PostScreen from "../pages/Post/PostScreen";
+import PaymentScreen from "../pages/PaymentScreen";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 const Stack = createNativeStackNavigator();
 const Slack = createNativeStackNavigator();
 const Log = createNativeStackNavigator();
+const Test = createNativeStackNavigator();
 // const Sign = createNativeStackNavigator();
+
+function Testis() {
+  return (
+    <Test.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      {/* <Test.Screen name="master" component={Master} /> */}
+      <Test.Screen name="payment" component={Payment} />
+    </Test.Navigator>
+  );
+}
 
 function StackList1() {
   return (
@@ -42,7 +59,6 @@ function MyDrawer() {
       drawerContent={(props) => <CustomeDrawer {...props} />}
     >
       <Drawer.Screen name="home" component={StackList1} />
-      {/* <Drawer.Screen name="post" component={PostScreen} /> */}
     </Drawer.Navigator>
   );
 }
@@ -58,6 +74,16 @@ function StackList2() {
     </Slack.Navigator>
   );
 }
+function Stripe() {
+  return (
+    <StripeProvider
+      merchantIdentifier="merchant.identifier"
+      publishableKey="pk_test_51LUPknSBcrxbib0Myl5Ya1XT4VLSeeKCiFCwPKTwqFeXg086HRyNZXG3JbBa1oAyx03ehAJu4mbyzMAuPTk9RxNE00OVXsm3SQ"
+    >
+      <PaymentScreen />
+    </StripeProvider>
+  );
+}
 
 function LogStack() {
   return (
@@ -71,6 +97,10 @@ function LogStack() {
       <Log.Screen name="signForm" component={SForm} />
       <Log.Screen name="welcomeScreen" component={WelcomeScreen} />
       <Log.Screen name="draw" component={MyDrawer} />
+      <Log.Screen name="custom" component={CustomeDrawer} />
+      <Log.Screen name="post" component={PostScreen} />
+      <Log.Screen name="pay" component={PaymentScreen} />
+      <Log.Screen name="paymentSuccess" component={PaymentSuccess} />
     </Log.Navigator>
   );
 }
@@ -84,4 +114,4 @@ function LogStack() {
 //   </Sign.Navigator>;
 // }
 
-export { StackList1, StackList2, LogStack };
+export { StackList1, StackList2, LogStack, Testis };

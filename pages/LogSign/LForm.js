@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import AppButton from "../../components/AppButton";
@@ -17,6 +17,14 @@ function LForm(props) {
 
   return (
     <View style={styles.main}>
+      <View>
+        <AppText style={{ fontSize: 40 }}>Login</AppText>
+      </View>
+      <View>
+        <AppText style={{ color: "#73777B" }}>
+          Please enter your Email & Password
+        </AppText>
+      </View>
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={() => props.navigation.navigate("welcomeScreen")}
@@ -24,30 +32,44 @@ function LForm(props) {
       >
         {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
           <>
-            <AppTextInput
-              keyboardType="email-address"
-              placeholder="Email"
-              icon="email"
-              onBlur={() => setFieldTouched("email")}
-              onChangeText={handleChange("email")}
-              size={30}
-            />
+            <View>
+              <AppTextInput
+                keyboardType="email-address"
+                placeholder="Email"
+                style={styles.input}
+                icon="email"
+                onBlur={() => setFieldTouched("email")}
+                onChangeText={handleChange("email")}
+                size={30}
+              />
+            </View>
             {touched.email && (
               <AppText style={{ color: "red" }}> {errors.email}</AppText>
             )}
-            <AppTextInput
-              icon="lock"
-              secureTextEntry
-              placeholder="Password"
-              onBlur={() => setFieldTouched("password")}
-              onChangeText={handleChange("password")}
-              size={30}
-            />
+            <View>
+              <AppTextInput
+                icon="lock"
+                secureTextEntry
+                style={styles.input}
+                placeholder="Password"
+                onBlur={() => setFieldTouched("password")}
+                onChangeText={handleChange("password")}
+                size={30}
+              />
+            </View>
             {touched.password && (
               <AppText style={{ color: "red" }}> {errors.password}</AppText>
             )}
-
-            <AppButton title="Log in" onPress={handleSubmit} />
+            {/* <TouchableOpacity>
+              <AppText style={{ color: "#73777B" }}>Forgot Password ?</AppText>
+            </TouchableOpacity> */}
+            <View style={styles.button}>
+              <AppButton
+                style={{ backgroundColor: "#8CC0DE" }}
+                title="Log in"
+                onPress={() => handleSubmit()}
+              />
+            </View>
           </>
         )}
       </Formik>
@@ -55,11 +77,22 @@ function LForm(props) {
   );
 }
 const styles = StyleSheet.create({
+  button: {
+    marginTop: 30,
+    width: "50%",
+  },
+  input: {
+    borderRadius: 50,
+    overflow: "hidden",
+    backgroundColor: "#73777B",
+  },
   main: {
     justifyContent: "center",
+    alignItems: "center",
     flex: 1,
     padding: 5,
     backgroundColor: "white",
+    paddingHorizontal: 20,
   },
 });
 

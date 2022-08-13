@@ -1,11 +1,13 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import AppButton from "../../components/AppButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import NamedInput from "../../components/NamedInput";
 import ValuedInput from "../../components/ValuedInput";
-// import { dataPost, dataFetch } from "../../api/client";
+import { test, testme } from "../../api/client";
+// import ImageInputList from "../../components/ImageInputList";
+import ImageIn from "../../components/ImageIn";
 
 const initialValues = {
   title: "",
@@ -17,15 +19,11 @@ const initialValues = {
   cost: "",
 };
 
-const PostScreen = () => {
+const PostScreen = ({ navigation, route }) => {
   const [date, setDate] = useState();
   const [time, setTime] = useState();
   const [mode, setMode] = useState();
   const [show, setShow] = useState(false);
-
-  // async function post(data) {
-  //   await dataPost(data);
-  // }
 
   const onChange = (event, selected) => {
     setShow(false);
@@ -43,8 +41,8 @@ const PostScreen = () => {
       hours = 12;
     }
     let fTime = hours + " : " + tempDate.getMinutes();
-    setTime(fTime);
-    setDate(fDate);
+    if (mode == "time") setTime(fTime);
+    else setDate(fDate);
   };
 
   const showMode = (type) => {
@@ -60,8 +58,14 @@ const PostScreen = () => {
           ...extra,
           ...values,
         };
-        console.log(n);
-        // dataFetch();
+        // test(n);
+        if (route.params?.key === "trek") {
+          test(n);
+        } else {
+          testme(n);
+        }
+        // title: route.params?.title
+        navigation.navigate("draw");
       }}
     >
       {({ handleChange, handleSubmit, setFieldTouched, touched }) => (
@@ -69,8 +73,8 @@ const PostScreen = () => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
               <NamedInput
-                heading={"Title"}
-                keyboardType="email-address"
+                heading={"Title (max-15 characters)"}
+                maxLength={15}
                 onChangeText={handleChange("title")}
               />
               <NamedInput
@@ -80,30 +84,29 @@ const PostScreen = () => {
                 onChangeText={handleChange("description")}
               />
               <NamedInput
-                heading={"No. of guides"}
-                keyboardType="numeric"
-                onChangeText={handleChange("guides")}
+                heading={"Level (easy/med/moderate)"}
+                onChangeText={handleChange("level")}
               />
               <NamedInput
                 heading={"Total Seats"}
                 keyboardType="numeric"
-                onChangeText={handleChange("guides")}
+                onChangeText={handleChange("seats")}
               />
               <NamedInput
                 heading={"Total Vacancies"}
                 keyboardType="numeric"
-                onChangeText={handleChange("guides")}
+                onChangeText={handleChange("vacancies")}
               />
               <NamedInput
                 heading={"Cost per Seat"}
                 keyboardType="numeric"
-                onChangeText={handleChange("guides")}
+                onChangeText={handleChange("cost")}
               />
-              <ValuedInput
+              {/* <ValuedInput
                 showSoftInputOnFocus={false}
                 placeholder="Level (e.g easy,med,difficult)"
                 caretHidden
-              />
+              /> */}
               <ValuedInput
                 showSoftInputOnFocus={false}
                 placeholder="Time"
@@ -134,8 +137,21 @@ const PostScreen = () => {
                 />
               )}
             </View>
+            <View
+              style={{
+                alignItems: "flex-start",
+              }}
+            >
+              <ImageIn />
+              <ImageIn />
+              <ImageIn />
+            </View>
             <View style={styles.button}>
-              <AppButton title={"Submit"} onPress={handleSubmit} />
+              <AppButton
+                title={"Submit"}
+                style={{ backgroundColor: "#78b0f9" }}
+                onPress={handleSubmit}
+              />
             </View>
           </ScrollView>
         </View>

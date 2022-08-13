@@ -14,13 +14,13 @@ import MCI from "@expo/vector-icons/MaterialCommunityIcons";
 
 const Card = ({
   title,
-  level,
-  color,
-  age,
+  level = "easy",
+  color = "green",
+  age = "12",
   desc,
-  time,
-  slots,
-  price,
+  time = "10am - 4pm: 6hr",
+  slots = "4:0 slots left",
+  price = "200 per slot",
   id,
   onPress,
 }) => {
@@ -50,9 +50,15 @@ const Card = ({
             <View>
               <AppText>{desc}</AppText>
             </View>
-            <View style={styles.time}>
-              <AppText>{time}</AppText>
-              <MCI name="clock" />
+            <View style={{ flexDirection: "row" }}>
+              <View style={styles.time}>
+                <MCI name="clock" size={15} />
+                <AppText>{time}</AppText>
+              </View>
+              <View style={styles.time}>
+                <MCI name="car" size={18} />
+                <AppText>{slots}</AppText>
+              </View>
             </View>
           </View>
           <View style={styles.price}>
@@ -61,7 +67,7 @@ const Card = ({
               <View style={styles.box}></View>
               <View style={styles.box}></View>
             </View>
-            <AppText style={styles.cost}>Rs. {price} per seat</AppText>
+            <AppText style={styles.cost}>Rs. {price} </AppText>
           </View>
         </View>
       </TouchableOpacity>
@@ -170,6 +176,7 @@ const styles = StyleSheet.create({
   },
   time: {
     marginTop: "5%",
+    marginRight: 5,
     flexDirection: "row",
     alignItems: "center",
   },

@@ -1,16 +1,54 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useState } from "react";
 import AppText from "../../components/AppText";
 import AppButton from "../../components/AppButton";
-import { dataFetch } from "../../api/client";
+import * as Facebook from "expo-facebook";
+// import Hyperlink from "react-native-hyperlink";
 
-const Login =({ navigation }) => {
-  useState(() => {
-    console.log(dataFetch())
-  }, []);
+// import { fest } from "../../api/client";
+
+const Login = ({ navigation }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [userData, setuserData] = useState();
+
+  const fbLog = async () => {
+    try {
+      await Facebook.initializeAsync({
+        appId: "1139742593276172",
+      });
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ["public_profile", "email"],
+      });
+      if (type === "success") {
+        fetch(
+          `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            setIsLoggedIn(true);
+            setuserData(data);
+            navigation.navigate("welcomeScreen");
+            console.log(data);
+          })
+          .catch((e) => console.log(e));
+      } else {
+      }
+    } catch ({ message }) {
+      console.log("login error");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.heading}>
+        <View style={{ borderRadius: 30, overflow: "hidden" }}>
+          <Image
+            style={styles.tinyLogo}
+            source={{
+              uri: "https://reactnative.dev/img/tiny_logo.png",
+            }}
+          />
+        </View>
         <AppText style={styles.text}>Treks & Trips</AppText>
         <AppText
           style={{ textAlign: "center", fontSize: 14, color: "#73777B" }}
@@ -31,7 +69,9 @@ const Login =({ navigation }) => {
             },
           ]}
           external={{ fontSize: 15, fontWeight: "500" }}
-          onPress={() => navigation.navigate("logForm")}
+          onPress={() => {
+            navigation.navigate("logForm");
+          }}
         />
         <AppButton
           style={styles.sign}
@@ -39,10 +79,15 @@ const Login =({ navigation }) => {
           onPress={() => navigation.navigate("signForm")}
           title="Sign Up"
         />
-        <AppButton title="Continue With Facebook" style={styles.buttons} />
+        <AppButton
+          title="Continue With Facebook"
+          style={styles.buttons}
+          onPress={() => fbLog()}
+        />
         <AppButton
           title="Continue With Gmail"
           style={[styles.buttons, { backgroundColor: "#F4BFBF" }]}
+          // onPress={() => fest()}
           external={{ color: "#000", fontWeight: "400" }}
         />
       </View>
@@ -78,6 +123,10 @@ const styles = StyleSheet.create({
     borderWidth: 0.3,
     marginTop: 8,
   },
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
   container: {
     flex: 1,
     alignItems: "center",
@@ -87,6 +136,8 @@ const styles = StyleSheet.create({
   },
   heading: {
     alignItems: "center",
+    position: "relative",
+    top: 120,
   },
   login: {
     width: "80%",
@@ -100,7 +151,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   text: {
-    fontSize: 26,
+    fontSize: 30,
     fontWeight: "bold",
   },
 });

@@ -2,13 +2,15 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import AppText from "./AppText";
 
+
 const BulletList = ({ title }) => {
+  // const [color,setColor]=useState('')
   return (
     <View style={styles.bulletList}>
-      <TouchableOpacity >
+      <TouchableOpacity>
         <View style={styles.circle} />
       </TouchableOpacity>
-        <AppText style={{ fontSize: 12 }}>{title}</AppText>
+        <AppText style={{ fontSize: 15 }}>{title}</AppText>
     </View>
   );
 };

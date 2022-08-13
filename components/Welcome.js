@@ -11,25 +11,27 @@ const Welcome = () => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.burger}>
-          <TouchableWithoutFeedback onPress={() => navigation.openDrawer()}>
-            <MCI name={"menu"} size={30} />
-          </TouchableWithoutFeedback>
-        </View>
-        <View>
-          <View style={styles.greet}>
-            <MCI name="human-greeting" size={50} color="black" />
-            <AppText style={styles.head}>Hey Jim</AppText>
+        <View style={styles.main}>
+          <View>
+            <TouchableWithoutFeedback onPress={() => navigation.openDrawer()}>
+              <MCI name={"menu"} size={30} />
+            </TouchableWithoutFeedback>
           </View>
-          <View style={styles.greet}>
-            <Ionicons
-              name="location-sharp"
-              size={30}
-              color="black"
-              s
-              style={{ paddingLeft: 10 }}
-            />
-            <AppText style={{ fontWeight: "500" }}>Manali,HP</AppText>
+          <View>
+            <View style={styles.greet}>
+              <MCI name="human-greeting" size={50} color="black" />
+              <AppText style={styles.head}>Hey Jim</AppText>
+            </View>
+            <View style={styles.greet}>
+              <Ionicons
+                name="location-sharp"
+                size={30}
+                color="black"
+                s
+                style={{ paddingLeft: 10 }}
+              />
+              <AppText style={{ fontWeight: "500" }}>Manali,HP</AppText>
+            </View>
           </View>
         </View>
       </View>
@@ -50,11 +52,6 @@ const Welcome = () => {
 export default Welcome;
 
 const styles = StyleSheet.create({
-  burger: {
-    position: "absolute",
-    left: 0,
-    top: 0,
-  },
   container: {
     justifyContent: "center",
     alignItems: "center",
@@ -67,5 +64,9 @@ const styles = StyleSheet.create({
   head: {
     fontWeight: "bold",
     fontSize: 27,
+  },
+  main: {
+    flexDirection: "row",
+    alignSelf: "flex-start",
   },
 });
